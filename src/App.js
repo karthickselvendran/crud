@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
@@ -18,7 +17,8 @@ function App() {
   const [status, setStatus] = useState("add");
   const [id, setId] = useState("");
 
-  const submit = () => {
+  const submit = (e) => {
+    e.preventDefault();
     if (name, email, phoneNumber, place) {
       if (status === "add") {
         let details = {
@@ -63,7 +63,7 @@ function App() {
   console.log(userDetails)
 
   return (
-    <div>
+    <div className=''>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" color="secondary">
           <Toolbar style={{ textAlign: "center" }}>
@@ -74,44 +74,33 @@ function App() {
         </AppBar>
       </Box>
       <br /><br />
-      <Box style={{ display: "flex", justifyContent: "center" }}
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          '& > :not(style)': {
-            m: 1,
-            width: 628,
-            height: 250,
-          },
-        }}
-      >
-        <Paper elevation={3} style={{ display: "flex", flexDirection: "column", justifyContent: "space-around", alignItems: "center" }}>
-          <br />
-          <div>
+      <div className='container'>
+        <div className='container-div1'>
+          <div className='paperDiv'>
             <TextField
+              className="mgn"
               value={name}
               label="Name"
               variant="outlined"
               onChange={(e) => setName(e.target.value)}
             />
             <TextField
+              className="mgn"
               value={email}
-              style={{ marginLeft: "50px" }}
               label="Email"
               variant="outlined"
               onChange={(e) => setEmail(e.target.value)}
             />
-          </div>
-          <div>
             <TextField
+              className="mgn"
               value={phoneNumber}
               label="Phone Number"
               variant="outlined"
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
             <TextField
+              className="mgn"
               value={place}
-              style={{ marginLeft: "50px" }}
               label="Place"
               variant="outlined"
               onChange={(e) => setPlace(e.target.value)}
@@ -119,17 +108,16 @@ function App() {
           </div>
           <div>
             <Button
+              className='Button mgn'
               variant="contained"
-              onClick={() => submit()}
+              onClick={(e) => submit(e)}
               color="success"
             >
               Submit
             </Button>
-            <br />
-            <br />
           </div>
-        </Paper>
-      </Box>
+        </div>
+      </div>
       <br />
       <br />
       <div style={{ display: "flex", justifyContent: "center", overflowX: "auto" }}>
@@ -143,7 +131,7 @@ function App() {
             <th>Delete</th>
           </tr>
           {
-            userDetails.length > 0 ? userDetails.map(eachDetail => {
+            userDetails.length > 0 && userDetails.map(eachDetail => {
               return (
                 <tr>
                   <td>{eachDetail.name}</td>
@@ -169,11 +157,15 @@ function App() {
                   </td>
                 </tr>
               )
-            }) : <span>No datas are present</span>
+            })
           }
         </table>
       </div>
-    </div>
+      {
+        userDetails.length === 0 &&
+        <h3 style={{ textAlign: "center" }}><br />No datas are present in the table</h3>
+      }
+    </div >
   );
 }
 
